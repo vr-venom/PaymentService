@@ -1,25 +1,21 @@
 package com.scaler.paymentservice.services;
 
-import com.scaler.paymentservice.dtos.CreatePaymentLinkDto;
+import com.razorpay.RazorpayException;
 import com.scaler.paymentservice.paymentgateway.stripe.StripePaymentGateway;
-import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
-import com.stripe.model.PaymentLink;
-import com.stripe.model.Price;
-import com.stripe.param.PaymentLinkCreateParams;
-import com.stripe.param.PriceCreateParams;
-import org.springframework.beans.factory.annotation.Value;
+import com.scaler.paymentservice.paymentgateway.razorpay.RazorpayPaymentGateway;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class PaymentService {
     private StripePaymentGateway stripePaymentGateway;
-    public PaymentService(StripePaymentGateway stripePaymentGateway) {
-        this.stripePaymentGateway = stripePaymentGateway;
-    }
+    private RazorpayPaymentGateway razorpayPaymentGateway;
 
-    public String createPaymentLink(Long orderId) throws StripeException {
 
-        return stripePaymentGateway.generatePaymentLink(1000L, orderId.toString());
+    public String createPaymentLink(Long orderId) throws StripeException, RazorpayException {
+
+        return razorpayPaymentGateway.generatePaymentLink(1000L, orderId.toString());
     }
 }

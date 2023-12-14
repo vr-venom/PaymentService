@@ -1,5 +1,6 @@
 package com.scaler.paymentservice.controllers;
 
+import com.razorpay.RazorpayException;
 import com.scaler.paymentservice.dtos.CreatePaymentLinkDto;
 import com.scaler.paymentservice.services.PaymentService;
 import com.stripe.exception.StripeException;
@@ -17,7 +18,7 @@ public class PaymentController {
         this.paymentService=paymentService;
     }
     @PostMapping("/")
-    public String creatPaymentLink(@RequestBody CreatePaymentLinkDto request) throws StripeException {
+    public String creatPaymentLink(@RequestBody CreatePaymentLinkDto request) throws StripeException, RazorpayException {
         return paymentService.createPaymentLink(request.getOrderId());
     }
 }
